@@ -111,6 +111,7 @@ include_directories(
 ## Declare a cpp executable
 # add_executable(proximal_avoidance_node src/proximal_avoidance_node.cpp)
   add_executable(laser_passthrough src/laser_passthrough.cpp)
+  add_executable(motor_input src/motor_input.cpp)
 ## Add cmake target dependencies of the executable/library
 ## as an example, message headers may need to be generated before nodes
 # add_dependencies(proximal_avoidance_node proximal_avoidance_generate_messages_cpp)
@@ -119,7 +120,8 @@ include_directories(
 # target_link_libraries(proximal_avoidance_node
 #   ${catkin_LIBRARIES}
 # )
-
+target_link_libraries(laser_passthrough ${catkin_LIBRARIES})
+target_link_libraries(motor_input ${catkin_LIBRARIES})
 #############
 ## Install ##
 #############
