@@ -8,6 +8,12 @@ find_package(catkin REQUIRED COMPONENTS
   roscpp
   rospy
   sensor_msgs
+  pcl_ros
+  tf
+  std_msgs
+  laser_geometry
+  pcl_conversions
+
 )
 
 ## System dependencies are found with CMake's conventions
@@ -104,7 +110,7 @@ include_directories(
 
 ## Declare a cpp executable
 # add_executable(proximal_avoidance_node src/proximal_avoidance_node.cpp)
-
+  add_executable(laser_passthrough src/laser_passthrough.cpp)
 ## Add cmake target dependencies of the executable/library
 ## as an example, message headers may need to be generated before nodes
 # add_dependencies(proximal_avoidance_node proximal_avoidance_generate_messages_cpp)
