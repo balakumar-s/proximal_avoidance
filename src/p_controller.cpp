@@ -20,7 +20,7 @@ void x_callback(const std_msgs::Float32& feed_x);
 void y_callback(const std_msgs::Float32& feed_y);
 int main(int argc,char** argv)
 {
-	ros::init(argc,argv,"k_controller");
+	ros::init(argc,argv,"p_controller");
 	ros::NodeHandle n;
 	ros::Subscriber c_x_sub=n.subscribe("error/x",1,x_callback);
 	ros::Subscriber c_y_sub=n.subscribe("error/symmetry",1,y_callback);

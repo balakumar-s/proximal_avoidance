@@ -54,7 +54,7 @@ void callback(const sensor_msgs::PointCloud2ConstPtr& input)
 
 int main(int argc,char** argv)
 {
-	ros::init(argc,argv,"feed_x_y");
+	ros::init(argc,argv,"error_x");
 	ros::NodeHandle n;
 	ros::Subscriber pcl_sub=n.subscribe("laser_pcl",1,callback);
 	//y_pub=n.advertise<std_msgs::Float32>("control_y",100);

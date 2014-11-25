@@ -1,0 +1,8 @@
+<launch>
+	<node pkg="joy" type="joy_node" name="joy_node" output="screen" respawn="true"/>
+	<node pkg="proximal_avoidance" type="laser_passthrough" name="laser_passthrough" output="screen" respawn="true"/>
+	<node pkg="proximal_avoidance" type="error_x" name="error_x" output="screen" respawn="true"/>
+	<node pkg="proximal_avoidance" type="error_symmetry" name="error_symmetry" output="screen" respawn="true"/>
+	<node pkg="proximal_avoidance" type="p_controller" name="p_controller" output="screen" respawn="true"/>
+	<node pkg="proximal_avoidance" type="motor_input" name="motor_input" output="screen" respawn="true"/>
+</launch>
