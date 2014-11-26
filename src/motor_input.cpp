@@ -27,19 +27,27 @@ int main(int argc,char** argv)
 {
 	ros::init(argc,argv,"motor_input");
 	ros::NodeHandle n;
-
+	ros::Rate loop_rate(50);
+	
 	ros::Subscriber joy_sub=n.subscribe("joy",1,joyCallback);
+	//if(swtch==1)
+	//{
 	ros::Subscriber fl_e_sub=n.subscribe("holobot/fl_error",100,fl_e_callback);
 	ros::Subscriber fr_e_sub=n.subscribe("holobot/fr_error",100,fr_e_callback);
 	ros::Subscriber bl_e_sub=n.subscribe("holobot/bl_error",100,bl_e_callback);
 	ros::Subscriber br_e_sub=n.subscribe("holobot/br_error",100,br_e_callback);
-	
+	//}
 	fl_pub=n.advertise<std_msgs::Float32>("holobot/fl",100);
 	fr_pub=n.advertise<std_msgs::Float32>("holobot/fr",100);
 	bl_pub=n.advertise<std_msgs::Float32>("holobot/bl",100);
 	br_pub=n.advertise<std_msgs::Float32>("holobot/br",100);
+	while(ros::ok())
+	{
 	control_function();
-	ros::spin();
+	
+	ros::spinOnce();
+	loop_rate.sleep();
+	}
 	return(0);
 }
 
@@ -62,32 +70,35 @@ void br_e_callback(const std_msgs::Float32& brE)
 
 void joyCallback(const sensor_msgs::Joy& joy_msg_in)
 {
-	float joy_x_=factor*(1+joy_msg_in.axes[1]);//left stick up-down
-	float joy_y_=factor*(1+joy_msg_in.axes[0]);//left stick left-right
-	float joy_yaw_=factor*(1+joy_msg_in.axes[2]);//right stick left-right
+	joy_x_=factor*(1+joy_msg_in.axes[1]);//left stick up-down
+	joy_y_=factor*(1+joy_msg_in.axes[0]);//left stick left-right
+	joy_yaw_=factor*(1+joy_msg_in.axes[2]);//right stick left-right
 	
-	float joy_x=joy_gain*joy_msg_in.axes[1];//left stick up-down
-	float joy_y=joy_gain*joy_msg_in.axes[0];//left stick left-right
-	float joy_yaw=joy_gain*joy_msg_in.axes[2];//right stick left-right
+	joy_x=joy_gain*joy_msg_in.axes[1];//left stick up-down
+	joy_y=joy_gain*joy_msg_in.axes[0];//left stick left-right
+	joy_yaw=joy_gain*joy_msg_in.axes[2];//right stick left-right
 	if(joy_msg_in.buttons[0]==1)
 	{
+		ROS_INFO("pressed A");
 		swtch=1;
 	}
 	if(joy_msg_in.buttons[1]==1)
 	{
+		ROS_INFO("pressed B");
 		swtch=0;
 	}
-   	}
+	//ROS_INFO("obtained joystick values");
+}
 
 void control_function()
 {
 
-	
+	//ROS_INFO("control loop");
 	std_msgs::Float32 fl,fr,bl,br;
 	//if(swtch==1)
 	//{
 		if (joy_x_>k_high && ((joy_y_>k_low)&&(joy_y_<k_high)) && (k_low<joy_yaw_<k_high)&&swtch==1)
-		{  		//nh.loginfo("moving forward");
+		{  		//ROS_INFO("moving forward");
 			//forward
 	 		key=1;
 
@@ -182,11 +193,6 @@ void control_function()
 		 	fr.data=fr_e-joy_y+joy_x;
 		 	bl.data=bl_e-joy_y+joy_x;
 		 	br.data=br_e;//+joy_y;
-
-
-
-		
-
 		}
 		else if(swtch==1)
 		{
@@ -208,5 +214,6 @@ void control_function()
 	fr_pub.publish(fr);
 	bl_pub.publish(bl);
 	br_pub.publish(br);
+	//ROS_INFO("published");
 }
 

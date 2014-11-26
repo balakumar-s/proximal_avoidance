@@ -40,12 +40,12 @@ void callback(const sensor_msgs::PointCloud2ConstPtr& input)
 	*/
 	float x_error;
 	//float j=25;
-	for(int i=0;i<5;i++)
+	for(int i=0;i<1;i++)
 	{
      	x_error=x_error+filtered_cloud.points[(filtered_cloud.width/2)-5+i].x;
 	}
 	std_msgs::Float32 control_x;
-	control_x.data=(x_error/5)-1;
+	control_x.data=(x_error/1)-0.7;
 	x_pub.publish(control_x);
 
 

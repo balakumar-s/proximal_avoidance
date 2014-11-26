@@ -7,10 +7,10 @@
 #include <std_msgs/Float32.h>
 using namespace std;
 ros::Publisher fl_pub,fr_pub,bl_pub,br_pub;
-float gain_x=350;
-float gain_y=0;
-float i_gain=0.00;
-float gain_yaw=0;
+float gain_x=250;
+float gain_y=1.5;
+float i_gain=0.01;
+float gain_yaw=0.5;
 float x_i_error=0;
 float y_i_error=0;
 float x_fl=0,x_fr=0,x_bl=0,x_br=0;

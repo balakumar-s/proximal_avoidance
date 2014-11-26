@@ -10,7 +10,7 @@ using namespace std;
 ros::Publisher fl_pub,fr_pub,bl_pub,br_pub;
 float gain_x=150;
 float gain_y=1.5;
-float gain_yaw=1.5;
+float gain_yaw=0;
 
 float x_fl=0,x_fr=0,x_bl=0,x_br=0;
 float y_fl=0,y_fr=0,y_bl=0,y_br=0;
