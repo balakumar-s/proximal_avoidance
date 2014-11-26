@@ -14,6 +14,8 @@ using namespace std;
 ros::Publisher error_yaw;
 void callback(const sensor_msgs::PointCloud2ConstPtr& input_pcl);
 float area_difference(pcl::PointCloud<pcl::PointXYZ> in_cloud);
+float radial_length(float x,float y);
+
 int main(int argc,char** argv)
 {
 	ros::init(argc,argv,"error_symmetry");
@@ -41,23 +43,31 @@ float area_difference(pcl::PointCloud<pcl::PointXYZ> in_cloud)
 	float area_right=0,area_left=0;
 	for(int i=0;i<in_cloud.width;i++)
 	{
-		if(in_cloud[i].y>0)
+		if(in_cloud[i].y<0)
 		{
-			area_left=area_left+in_cloud[i].y;
+			
+			area_left=area_left+radial_length(in_cloud[i].x,in_cloud[i].y);
 		}
 		else
 		{
-			area_right=area_right+in_cloud[i].y;
+			area_right=area_right+radial_length(in_cloud[i].x,in_cloud[i].y);
+
 		}
 	}
-	if(area_right>area_left/10)
+	if(area_right>area_left/100)
 	{
-		//area_left=-area_left;
+		area_left=-area_left;
 	}
-	if(area_left>area_right/10)
+	if(area_left>area_right/100)
 	{
-		//area_right=-area_right;
+		area_right=-area_right;
 	}		
-	float ar_diff=area_right+area_left;
+	float ar_diff=area_right-area_left;
 	return(ar_diff);
+}
+float radial_length(float x,float y)
+{
+	float z=0;
+	z=sqrt((x*x)+(y*y));
+	return(z);
 }

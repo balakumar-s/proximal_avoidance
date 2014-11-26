@@ -44,8 +44,8 @@ void y_callback(const std_msgs::Float32& feed_y)
 	float error=feed_y.data;
 	float input=gain_y*error;
 	//std_msgs::Float32 fl,fr,bl,br;
-	y_fl=y_br=input;
-	y_fr=y_bl=-input;
+	y_fl=y_br=-input;
+	y_fr=y_bl=input;
 	yaw_fl=yaw_bl=-gain_yaw*error;
 	yaw_fr=yaw_br=error*gain_yaw;
 	//x_fl=0;x_fr=0;x_bl=0;x_br=0;
