@@ -7,12 +7,15 @@
 #include <std_msgs/Float32.h>
 using namespace std;
 ros::Publisher fl_pub,fr_pub,bl_pub,br_pub;
-float gain_x=250;
-float gain_y=1.5;
-float i_gain=0.01;
-float gain_yaw=0.5;
+float gain_x=0;
+float gain_y=1;
+float i_gain=0.005;
+float gain_yaw=0;
+float i_yaw=0.00;
+
 float x_i_error=0;
 float y_i_error=0;
+float yaw_i_error=0;
 float x_fl=0,x_fr=0,x_bl=0,x_br=0;
 float y_fl=0,y_fr=0,y_bl=0,y_br=0;
 float yaw_fl=0,yaw_fr=0,yaw_bl=0,yaw_br=0;
@@ -49,8 +52,9 @@ void y_callback(const std_msgs::Float32& feed_y)
 	//std_msgs::Float32 fl,fr,bl,br;
 	y_fl=y_br=input;
 	y_fr=y_bl=-input;
-	yaw_fl=yaw_bl=-gain_yaw*error;
-	yaw_fr=yaw_br=error*gain_yaw;
+	yaw_i_error=yaw_i_error+i_yaw*error;
+	yaw_fl=yaw_bl=-gain_yaw*error-yaw_i_error;
+	yaw_fr=yaw_br=error*gain_yaw+yaw_i_error;
 	//x_fl=0;x_fr=0;x_bl=0;x_br=0;
 
 

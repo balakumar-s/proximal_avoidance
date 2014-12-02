@@ -54,11 +54,13 @@ float area_difference(pcl::PointCloud<pcl::PointXYZ> in_cloud)
 
 		}
 	}
-	if(area_right>area_left/100)
+	cout<<area_left<<" "<<area_right<<" ";
+	ROS_INFO("");
+	if(area_right<area_left/1000)
 	{
 		area_left=-area_left;
 	}
-	if(area_left>area_right/100)
+	if(area_left<area_right/1000)
 	{
 		area_right=-area_right;
 	}		
