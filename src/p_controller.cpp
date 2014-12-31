@@ -8,7 +8,7 @@
 #include <std_msgs/Float32.h>
 using namespace std;
 ros::Publisher fl_pub,fr_pub,bl_pub,br_pub;
-float gain_x=0;
+float gain_x=0.1;
 float gain_y=0.6;
 float gain_yaw=0.07;
 

@@ -8,9 +8,11 @@
 using namespace std;
 ros::Publisher fl_pub,fr_pub,bl_pub,br_pub;
 float gain_x=0;
-float gain_y=1;
-float i_gain=0.005;
-float gain_yaw=0;
+float gain_y=0.5;
+float i_gain=0.0001;
+
+
+float gain_yaw=0.5;
 float i_yaw=0.00;
 
 float x_i_error=0;
@@ -53,17 +55,19 @@ void y_callback(const std_msgs::Float32& feed_y)
 	y_fl=y_br=input;
 	y_fr=y_bl=-input;
 	yaw_i_error=yaw_i_error+i_yaw*error;
-	yaw_fl=yaw_bl=-gain_yaw*error-yaw_i_error;
-	yaw_fr=yaw_br=error*gain_yaw+yaw_i_error;
+	//if()
+	yaw_fl=yaw_bl=0;//-gain_yaw*error+yaw_i_error;
+	yaw_fr=yaw_br=error*gain_yaw-yaw_i_error;
 	//x_fl=0;x_fr=0;x_bl=0;x_br=0;
-
+	cout<<yaw_i_error;
+	ROS_INFO(" integral error ");
 
 
 	std_msgs::Float32 fl,fr,bl,br;
-	fl.data=x_fl+y_fl+yaw_fl;
-	fr.data=x_fr+y_fr+yaw_fr;
-	bl.data=x_bl+y_bl+yaw_bl;
-	br.data=x_br+y_br+yaw_br;
+	fl.data=x_fl+y_fl-yaw_fl;
+	fr.data=x_fr+y_fr-yaw_fr;
+	bl.data=x_bl+y_bl-yaw_bl;
+	br.data=x_br+y_br-yaw_br;
 	fl_pub.publish(fl);
 	fr_pub.publish(fr);
 	bl_pub.publish(bl);

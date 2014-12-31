@@ -97,119 +97,21 @@ void control_function()
 	std_msgs::Float32 fl,fr,bl,br;
 	//if(swtch==1)
 	//{
-		if (joy_x_>k_high && ((joy_y_>k_low)&&(joy_y_<k_high)) && (k_low<joy_yaw_<k_high)&&swtch==1)
-		{  		//ROS_INFO("moving forward");
-			//forward
-	 		key=1;
-
-	 		fl.data=fl_e+joy_x;
-	 		fr.data=fr_e+joy_x;
-	 		bl.data=bl_e+joy_x;
-	 		br.data=br_e+joy_x;
-		}
-		else if(joy_x_<k_low && ((joy_y_>k_low)&&(joy_y_<k_high)) && (k_low<joy_yaw_<k_high)&&swtch==1)
-		{
-		//reverse  
-		  	key=2;
-
-	 		fl.data=fl_e+joy_x;
-	 		fr.data=fr_e+joy_x;
-	 		bl.data=bl_e+joy_x;
-	 		br.data=br_e+joy_x;
-		}
-		else if(((joy_x_>k_low)&&(joy_x_<k_high)) && (joy_y_>k_high) && (k_low<joy_yaw_<k_high)&&swtch==1)
-		{
-		//left  
-		 	key=3;
-			
-			fl.data=fl_e+joy_y;
-	 		fr.data=fr_e-joy_y;
-	 		bl.data=bl_e-joy_y;
-	 		br.data=br_e+joy_y;
-		}
-		else if(((joy_x_>k_low)&&(joy_x_<k_high)) && (joy_y_<k_low) && (k_low<joy_yaw_<k_high)&&swtch==1)
-		{
-		 //right  
-		  	key=4;
-		  	
-		  	fl.data=fl_e+joy_y;
-	 		fr.data=fr_e-joy_y;
-	 		bl.data=bl_e-joy_y;
-	 		br.data=br_e+joy_y;
-		}
-		else if((k_low<joy_x_<k_high) && (k_low<joy_y_<k_high) && (joy_yaw_>k_high)&&swtch==1)
-		{
-		 //CCW
-		  	key=5;	
-		  	fl.data=fl_e-joy_yaw;
-	 		fr.data=fr_e+joy_yaw;
-	 		bl.data=bl_e-joy_yaw;
-	 		br.data=br_e+joy_yaw;
-		}
-		else if((k_low<joy_x_<k_high) && (k_low<joy_y_<k_high) && (joy_yaw_<k_low)&&swtch==1)
-		{
-		//CW
-		  key=6;
-		  	fl.data=fl_e-joy_yaw;
-	 		fr.data=fr_e+joy_yaw;
-	 		bl.data=bl_e-joy_yaw;
-	 		br.data=br_e+joy_yaw;
-		}
-		else if((joy_x_>k_high) && (joy_y_>k_high) && (k_low<joy_yaw_<k_high)&&swtch==1)
-		{
-		//diagonal left_forward
-			key=7;
-		 	fl.data=fl_e+joy_y+joy_x;
-		 	fr.data=fr_e;
-		 	bl.data=bl_e;
-		 	br.data=br_e+joy_y+joy_x;		
-		}
-		else if((joy_x_<k_low) && (joy_y_<k_low) && (k_low<joy_yaw_<k_high)&&swtch==1)
-		{
-		//diagonal right_reverse
-		 key=8;
-			fl.data=fl_e+joy_y+joy_x;
-		 	fr.data=fr_e;
-		 	bl.data=bl_e;
-		 	br.data=br_e+joy_y+joy_x;			
-			}
-		else if((joy_x_>k_high) && (joy_y_<k_low) && (k_low<joy_yaw_<k_high)&&swtch==1)
-		{
-		//diagonal right_forward
-		key=9;	
-			fl.data=fl_e;//-joy_y;
-	 		fr.data=fr_e-joy_y+joy_x;
-	 		bl.data=bl_e-joy_y+joy_x;
-	 		br.data=br_e;//+joy_y;
-
-			
-		}
-		else if((joy_x_<k_low) && (joy_y_>k_high) && (k_low<joy_yaw_<k_high)&&swtch==1)
-		{
-		//diagonal left_reverse
-		 key=10;
-
-			fl.data=fl_e;//-joy_y;
-		 	fr.data=fr_e-joy_y+joy_x;
-		 	bl.data=bl_e-joy_y+joy_x;
-		 	br.data=br_e;//+joy_y;
-		}
-		else if(swtch==1)
-		{
-			fl.data=fl_e;
-			fr.data=fr_e;
-			bl.data=bl_e;
-			br.data=br_e;
-		}
-		
-	
-	if(swtch==0)
+	if(swtch==1)
+	{
+	fl.data=fl_e-joy_x+joy_y+joy_yaw;
+	fr.data=fr_e-joy_x-joy_y-joy_yaw;
+	bl.data=bl_e-joy_x-joy_y+joy_yaw;
+	br.data=br_e-joy_x+joy_y-joy_yaw;
+	}	
+	else
 	{
 		fl.data=0;
 		fr.data=0;
 		bl.data=0;
 		br.data=0;
 	}
+
 	fl_pub.publish(fl);
 	fr_pub.publish(fr);
 	bl_pub.publish(bl);

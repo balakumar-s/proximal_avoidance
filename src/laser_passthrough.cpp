@@ -67,7 +67,7 @@ int main(int argc,char**argv)
 	ros::init(argc,argv,"laser_to_pcl");
 	ros::NodeHandle n;
 	pcl_pub=n.advertise<sensor_msgs::PointCloud2>("laser_pcl",1);
-    ros::Subscriber laser_sub = n.subscribe("scan",1,callback);
+    ros::Subscriber laser_sub = n.subscribe("vrep/scan",1,callback);
 	ros::spin();
     return(0);
 }

@@ -11,7 +11,7 @@
 #include <pcl_conversions/pcl_conversions.h>
 #include <pcl/filters/passthrough.h>
 
-#define THRESH 4
+#define THRESH 6
 laser_geometry::LaserProjection projector_;
 ros::Publisher pcl_pub;
 sensor_msgs::PointCloud2 cloud;
@@ -40,7 +40,7 @@ int main(int argc,char**argv)
 	ros::init(argc,argv,"laser_to_pcl");
 	ros::NodeHandle n;
 	pcl_pub=n.advertise<sensor_msgs::PointCloud2>("laser_pcl",1);
-    ros::Subscriber laser_sub = n.subscribe("scan",1,callback);
+    ros::Subscriber laser_sub = n.subscribe("/vrep/scan",1,callback);
 	ros::spin();
     return(0);
 }

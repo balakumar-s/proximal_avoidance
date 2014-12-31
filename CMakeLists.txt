@@ -121,6 +121,8 @@ include_directories(
   add_executable(joy_control src/joy_control.cpp)
   add_executable(accu_joy_control src/accu_joy_control.cpp)
   add_executable(urdf_parser src/urdf_parser.cpp)
+  add_executable(tf_pub_vrep src/tf_pub_vrep.cpp)
+
 ## Add cmake target dependencies of the executable/library
 ## as an example, message headers may need to be generated before nodes
 # add_dependencies(proximal_avoidance_node proximal_avoidance_generate_messages_cpp)
@@ -139,6 +141,7 @@ target_link_libraries(laser_max_passthrough ${catkin_LIBRARIES})
 target_link_libraries(joy_control ${catkin_LIBRARIES})
 target_link_libraries(accu_joy_control ${catkin_LIBRARIES})
 target_link_libraries(urdf_parser ${catkin_LIBRARIES})
+target_link_libraries(tf_pub_vrep ${catkin_LIBRARIES})
 #############
 ## Install ##
 #############
