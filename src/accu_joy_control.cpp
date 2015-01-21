@@ -70,12 +70,24 @@ void control_function()
 	float left_right=joy_y;
 	float cw_ccw=joy_yaw;
 	std_msgs::Float32 fl,fr,bl,br;
-	if(swtch==1)
+	float x,y,z;
+	x=abs(joy_x);
+	y=abs(joy_y);
+	z=abs(joy_yaw);
+	int dead=0;
+	if(x>25||y>25||z>25)
 	{
-	fl.data=-joy_x+joy_y+joy_yaw;
-	fr.data=-joy_x-joy_y-joy_yaw;
-	bl.data=-joy_x-joy_y+joy_yaw;
-	br.data=-joy_x+joy_y-joy_yaw;
+		dead=1;
+	//	ROS_INFO("dead %f",z);
+	}
+		
+	if((swtch==1) && (dead==1))
+	{
+	//	ROS_INFO("frward");
+	fl.data=+joy_x-joy_y-joy_yaw;
+	fr.data=+joy_x+joy_y+joy_yaw;
+	bl.data=+joy_x+joy_y-joy_yaw;
+	br.data=+joy_x-joy_y+joy_yaw;
 	}	
 	else
 	{
